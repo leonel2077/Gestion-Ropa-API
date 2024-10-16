@@ -1,5 +1,5 @@
-const db = require('../models');
-const bcrypt = require('bcryptjs');
+import db from '../models';
+import { compare } from 'bcryptjs';
 
 const createUser = async (req, res) => {
   try {
@@ -29,7 +29,7 @@ const loginUser = async (req, res) => {
     }
 
     // Comparamos la contraseña ingresada con la contraseña hasheada en la base de datos
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await compare(password, user.password);
 
     if (!isMatch) {
       return res.status(400).json({ error: 'Contraseña incorrecta' }); // Si no coincide, devolvemos un error
@@ -68,4 +68,4 @@ const getUserById = async (req, res) => {
   }
 };
 
-module.exports = { createUser, getUsers, getUserById, loginUser };
+export default { createUser, getUsers, getUserById, loginUser };

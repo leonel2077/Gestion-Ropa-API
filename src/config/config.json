@@ -1,9 +1,10 @@
 {
-    "development": {
-      "username": "root",
-      "password": "kidsSeeGh0sts",
-      "database": "DB_GESTION-ROPA-EFI",
-      "host": "127.0.0.1",
-      "dialect": "mysql"
-    }
+  "development": {
+    "username": "root",
+    "password": "kidsSeeGh0sts",
+    "database": "db_gestion_ropa_efi",
+    "host": "localhost",
+    "port": 4000,
+    "dialect": "mysql"
   }
+}
