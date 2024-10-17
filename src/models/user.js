@@ -1,8 +1,8 @@
 'use strict';
-import { Model } from 'sequelize';
-import { genSalt, hash } from 'bcryptjs'; 
+const { Model } = require('sequelize');
+const bcrypt = require('bcryptjs');
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   class User extends Model {}
 
   User.init({

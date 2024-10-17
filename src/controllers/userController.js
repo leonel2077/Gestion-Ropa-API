@@ -1,5 +1,5 @@
-import db from '../models';
-import { compare } from 'bcryptjs';
+const db = require('../models');
+const { compare } = require('bcryptjs');
 
 const createUser = async (req, res) => {
   try {
@@ -67,5 +67,4 @@ const getUserById = async (req, res) => {
     res.status(500).json({ error: 'Error obteniendo el usuario' });
   }
 };
-
-export default { createUser, getUsers, getUserById, loginUser };
+module.exports = { createUser, getUsers, getUserById, loginUser };
