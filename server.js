@@ -6,6 +6,8 @@ const brandRoutes = require('./src/routes/brandRoutes');
 const countryRoutes = require('./src/routes/countryRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const garmentTypeRoutes = require('./src/routes/garmentTypeRoutes');
+const clothesRoutes = require('./src/routes/clothesRoutes');
+
 
 dotenv.config();
 
@@ -18,6 +20,8 @@ app.use('/api', userRoutes);
 app.use('/api', countryRoutes);
 app.use('/api', brandRoutes);
 app.use('/api', garmentTypeRoutes);
+app.use('/api', clothesRoutes);
+
 
 const PORT = process.env.PORT || 4000;
 
