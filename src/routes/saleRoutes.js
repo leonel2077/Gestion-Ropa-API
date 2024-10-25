@@ -1,6 +1,6 @@
 const express = require('express');
 const { createSale, getSales, getSaleById, deleteSale } = require('../controllers/saleController');
-const authenticate = require('../middleware/authenticate');
+const authenticate = require('../middlewares/authenticate');
 const router = express.Router();
 
 router.post('/sales/', authenticate, createSale);
