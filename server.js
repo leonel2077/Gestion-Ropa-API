@@ -1,12 +1,16 @@
+// Dependencias
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+// Modelos
 const { sequelize } = require('./src/models');
+// Rutas
 const brandRoutes = require('./src/routes/brandRoutes');
 const countryRoutes = require('./src/routes/countryRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const garmentTypeRoutes = require('./src/routes/garmentTypeRoutes');
 const clothesRoutes = require('./src/routes/clothesRoutes');
+const saleRoutes = require('./src/routes/saleRoutes');
 
 
 dotenv.config();
@@ -21,7 +25,7 @@ app.use('/api', countryRoutes);
 app.use('/api', brandRoutes);
 app.use('/api', garmentTypeRoutes);
 app.use('/api', clothesRoutes);
-
+app.use('/api', saleRoutes);
 
 const PORT = process.env.PORT || 4000;
 
