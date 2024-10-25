@@ -17,29 +17,40 @@ const createUser = async (req, res) => {
   }
 };
 
+const jwt = require('jsonwebtoken');
+
 const loginUser = async (req, res) => {
-  const { email, password } = req.body; // Extraemos email y password del request
+  const { email, password } = req.body;
 
   try {
-    // Buscamos el usuario por email
     const user = await db.User.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(404).json({ error: 'Usuario no encontrado' }); // Si el usuario no existe, devolvemos error
+      return res.status(404).json({ error: 'Usuario no encontrado' });
     }
 
-    // Comparamos la contraseña ingresada con la contraseña hasheada en la base de datos
+    // Verificar la contraseña
     const isMatch = await compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(400).json({ error: 'Contraseña incorrecta' }); // Si no coincide, devolvemos un error
+      return res.status(400).json({ error: 'Contraseña incorrecta' });
     }
-    res.status(200).json({ message: 'Login exitoso' });
+
+    // Generar el token JWT
+    const token = jwt.sign(
+      { id: user.id, role: user.role }, // Información a incluir en el token
+      process.env.JWT_SECRET,          // Clave secreta desde el archivo .env
+      { expiresIn: '1h' }              // Duración del token
+    );
+
+    // Devolver el token al cliente
+    res.status(200).json({ message: 'Login exitoso', token });
   } catch (error) {
-    console.error(error); // Imprime el error en consola si ocurre
-    res.status(500).json({ error: 'Error en el login' }); // Devuelve un mensaje de error si hay un problema en el servidor
+    console.error(error);
+    res.status(500).json({ error: 'Error en el login' });
   }
 };
+
 
 const getUsers = async (req, res) => {
   try {
