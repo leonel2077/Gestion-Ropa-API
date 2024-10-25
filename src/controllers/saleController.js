@@ -22,7 +22,7 @@ const getSales = async (req, res) => {
         sales = await db.Sale.findAll({
           include: { model: db.User, attributes: ['name', 'email'] },
         });
-      } else if (userRole === 'seller') {
+      } else if (userRole === 'user') {
         sales = await db.Sale.findAll({
           where: { userId }, 
           include: { model: db.User, attributes: ['name', 'email'] },

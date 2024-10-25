@@ -3,7 +3,7 @@ const db = require('../models');
 const createSaleDetail = async (req, res) => {
     const { saleId, clothesId, price, quantity} = req.body;
     try {
-        const saleDetail = await db.saleDetail.create({ saleId, clothesId, quantity, price});
+        const saleDetail = await db.SaleDetail.create({ saleId, clothesId, quantity, price});
         res.status(201).json(saleDetail);
     } catch (error) {
         console.error(error);
@@ -13,14 +13,13 @@ const createSaleDetail = async (req, res) => {
 
 // Obtener todos los detalles de una venta en particular
 const getSaleDetailsBySaleId = async (req, res) => {
-    const { saleId } = req.params;
+    const { saleId } = req.query;
     try {
-        const saleDetails = await db.saleDetail.findAll({ where: { saleId } });
+        const saleDetails = await db.SaleDetail.findAll({ where: { saleId } });
         res.status(200).json(saleDetails);
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'Error obteniendo los detalles de la venta'})
-        
     }
 }
 
