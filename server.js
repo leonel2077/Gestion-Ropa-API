@@ -11,7 +11,7 @@ const userRoutes = require('./src/routes/userRoutes');
 const garmentTypeRoutes = require('./src/routes/garmentTypeRoutes');
 const clothesRoutes = require('./src/routes/clothesRoutes');
 const saleRoutes = require('./src/routes/saleRoutes');
-const saleDetailRoutes = require('./src/routes/saleDetailRoutes')
+const saleDetailRoutes = require('./src/routes/saleDetailRoutes');
 
 dotenv.config();
 

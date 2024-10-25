@@ -18,7 +18,7 @@ const getSaleDetailsBySaleId = async (req, res) => {
         const saleDetails = await db.saleDetail.findAll({ where: { saleId } });
         res.status(200).json(saleDetails);
     } catch (error) {
-        console.error(eror)
+        console.error(error)
         res.status(500).json({ error: 'Error obteniendo los detalles de la venta'})
         
     }
