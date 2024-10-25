@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "root1234",
+    "password": "Root1234!",
     "database": "db_gestion_ropa_efi",
     "host": "localhost",
     "port": 4000,
