@@ -13,7 +13,7 @@ Permite la administración de usuarios, prendas, marcas, tipos de prendas, venta
 
 1. Clonar el repositorio:
    ```bash
-    git clone <git@github.com:leonel2077/Gestion-Ropa-API.git>
+    git clone git@github.com:leonel2077/Gestion-Ropa-API.git
     cd Gestion-Ropa-API
    ```
 2. Instalar dependencias:
