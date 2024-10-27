@@ -1,15 +1,32 @@
 const db = require('../models');
+const clothesController = require('./clothesController');
 
 const createSale = async (req, res) => {
     try {
-      const { totalAmount, userId } = req.body;
+      const { totalAmount, userId, saleDetails } = req.body;
       const sale = await db.Sale.create({ totalAmount, userId, });
+
+      for (const detail of saleDetails) {
+        const { clothesId, quantity, price } = detail;
+
+        // Crea cada SaleDetail asociado a la venta
+        await db.SaleDetail.create({
+            saleId: sale.id,
+            clothesId,
+            quantity,
+            price
+        });
+
+        // Reduce el stock
+        await clothesController.reduceStock(clothesId, quantity);
+      }
+
       res.status(201).json(sale);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Error creando la venta' });
     }
-  };
+};
 
 const getSales = async (req, res) => {
     try {
@@ -36,7 +53,7 @@ const getSales = async (req, res) => {
       console.error(error);
       res.status(500).json({ error: 'Error obteniendo las ventas' });
     }
-  };
+};
   
 
 const getSaleById = async (req, res) => {
@@ -56,9 +73,9 @@ const getSaleById = async (req, res) => {
       console.error(error);
       res.status(500).json({ error: 'Error obteniendo la venta' });
     }
-  };
+};
   
-  const deleteSale = async (req, res) => {
+const deleteSale = async (req, res) => {
     try {
       const { id } = req.params;
   
@@ -74,6 +91,6 @@ const getSaleById = async (req, res) => {
       console.error(error);
       res.status(500).json({ error: 'Error eliminando la venta' });
     }
-  };
+};
   
 module.exports = { createSale, getSales, getSaleById, deleteSale };

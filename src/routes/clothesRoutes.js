@@ -8,6 +8,8 @@ router.get('/clothes/:id', clothesController.getClothesById);
 router.put('/clothes/:id', clothesController.updateClothes);
 router.delete('/clothes/:id', clothesController.deleteClothes);
 
+router.post('/clothes/add-stock', clothesController.addStock)
+
 router.get('/clothes/filter/color', clothesController.filterClothesByColor);
 router.get('/clothes/filter/brand', clothesController.filterClothesByBrand);
 router.get('/clothes/filter/garmentType', clothesController.filterClothesByGarmentType);

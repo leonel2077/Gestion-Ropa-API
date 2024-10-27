@@ -66,6 +66,45 @@ const deleteClothes = async (req, res) => {
   }
 };
 
+const addStock = async (id, quantity) => {
+  try {
+    const clothes = await db.Clothes.findByPk(id);
+
+    if (!clothes) {
+        throw new Error('Prenda no encontrada');
+    }
+
+    clothes.stock += quantity;
+    await clothes.save();
+  } catch (error) {
+    console.error(`Error al añadir stock: ${error.message}`);
+    throw error;
+  }
+}
+
+const reduceStock = async (id, quantity) => {
+  try {
+    const clothes = await db.Clothes.findByPk(id);
+
+    if (!clothes) {
+      throw new Error('Producto no encontrado');
+    }
+
+    if (clothes.stock < quantity) {
+      throw new Error('Stock insuficiente');
+    }
+
+    clothes.stock -= quantity;
+    await clothes.save();
+    
+    console.log(`Stock actualizado para el producto con ID ${id}: nuevo stock = ${clothes.stock}`);
+    return clothes;
+  } catch (error) {
+    console.error(`Error al reducir stock: ${error.message}`);
+    throw error;
+  }
+};
+
 const filterClothesByColor = async (req, res) => {
     try {
       const { color } = req.query; 
@@ -116,4 +155,4 @@ const filterClothesByGarmentType = async (req, res) => {
   
   
 
-module.exports = { createClothes, getClothes, getClothesById, updateClothes, deleteClothes, filterClothesByColor, filterClothesByBrand, filterClothesByGarmentType};
+module.exports = { createClothes, getClothes, getClothesById, updateClothes, deleteClothes, addStock, reduceStock, filterClothesByColor, filterClothesByBrand, filterClothesByGarmentType};
