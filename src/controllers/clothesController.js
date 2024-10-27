@@ -87,16 +87,16 @@ const reduceStock = async (id, quantity) => {
     const clothes = await db.Clothes.findByPk(id);
 
     if (!clothes) {
-      throw new Error('Producto no encontrado');
+      throw new Error(`Producto con ID ${id} no encontrado`);
     }
 
     if (clothes.stock < quantity) {
-      throw new Error('Stock insuficiente');
+      throw new Error(`Stock insuficiente para el producto con ID ${id}`);
     }
 
     clothes.stock -= quantity;
     await clothes.save();
-    
+
     console.log(`Stock actualizado para el producto con ID ${id}: nuevo stock = ${clothes.stock}`);
     return clothes;
   } catch (error) {

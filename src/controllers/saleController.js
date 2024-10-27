@@ -2,32 +2,40 @@ const db = require('../models');
 const clothesController = require('./clothesController');
 
 const createSale = async (req, res) => {
-    try {
-      const { totalAmount, userId, saleDetails } = req.body;
-      const sale = await db.Sale.create({ totalAmount, userId, });
+  try {
+    const { totalAmount, saleDetails } = req.body;
+    const userId = req.user.id;
 
-      for (const detail of saleDetails) {
-        const { clothesId, quantity, price } = detail;
+    console.log("Datos recibidos para crear la venta:", { totalAmount, userId, saleDetails });
 
-        // Crea cada SaleDetail asociado a la venta
-        await db.SaleDetail.create({
-            saleId: sale.id,
-            clothesId,
-            quantity,
-            price
-        });
+    // Crear la venta
+    const sale = await db.Sale.create({ totalAmount, userId });
+    console.log("Venta creada:", sale);
 
-        // Reduce el stock
-        await clothesController.reduceStock(clothesId, quantity);
-      }
+    // Crear detalles de venta y reducir el stock
+    for (const detail of saleDetails) {
+      const { clothesId, quantity, price } = detail;
+      console.log(`Procesando SaleDetail para clothesId ${clothesId} con cantidad ${quantity} y precio ${price}`);
 
-      res.status(201).json(sale);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error creando la venta' });
+      // Crea cada SaleDetail asociado a la venta
+      await db.SaleDetail.create({
+        saleId: sale.id,
+        clothesId,
+        quantity,
+        price,
+      });
+
+      // Reduce el stock
+      await clothesController.reduceStock(clothesId, quantity);
+      console.log(`Stock reducido para clothesId ${clothesId} en cantidad ${quantity}`);
     }
-};
 
+    res.status(201).json(sale);
+  } catch (error) {
+    console.error("Error en createSale:", error);
+    res.status(500).json({ error: 'Error creando la venta' });
+  }
+};
 const getSales = async (req, res) => {
     try {
       const userId = req.user.id; 
