@@ -33,10 +33,16 @@ Crear un archivo `.env` en la raíz del proyecto y configurar las variables de e
 4. Crear base de datos y ejecutar migraciones:
     ```bash
     node createDatabase.js
+    cd src/
     npx sequelize-cli db:migrate
     ```
-5. Iniciar la API:
+5. Ejecutar los seeders:
    ```bash
+   npx sequelize-cli db:seed:all
+   ```
+6. Iniciar la API:
+   ```bash
+   cd ..
    npm start
    ```
 La API estará disponible en `http://localhost:4001`.
