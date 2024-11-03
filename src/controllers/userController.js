@@ -44,7 +44,7 @@ const loginUser = async (req, res) => {
     );
 
     // Devolver el token al cliente
-    res.status(200).json({ message: 'Login exitoso', token });
+    res.status(200).json({ message: 'Login exitoso', token, role: user.role });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error en el login' });

@@ -36,6 +36,7 @@ const createSale = async (req, res) => {
     res.status(500).json({ error: 'Error creando la venta' });
   }
 };
+
 const getSales = async (req, res) => {
     try {
       const userId = req.user.id; 
